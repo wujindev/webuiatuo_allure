@@ -1,0 +1,82 @@
+
+1、autoit上传
+
+upload.au3
+;first make sure the number of arguments passed into the scripts is more than 1
+           If $CmdLine[0]<2 Then Exit EndIf ;if parmas num <2 ,then break
+          ;$CmdLine[0] ;参数的数量
+          ;$CmdLine[1] ;第一个参数 (脚本名称后面)
+          ;$CmdLine[2] ;第二个参数
+          ;都是从cmd传入参数
+           handleUpload($CmdLine[1],$CmdLine[2])
+         ;定义上传函数，有两个参数，第一个是浏览器名字，第二参数是文件路径
+         Func handleUpload($browser, $uploadfile)
+          Dim $title                          ;定义一个title变量
+        ;根据弹窗的title来判断是什么浏览器
+        If $browser="ie" Then                          ; 代表IE浏览器
+              $title="选择要加载的文件"
+        ElseIf $browser="chrome" Then               ; 代表谷歌浏览器
+             $title="打开"
+        ElseIf    $browser="firefox" Then             ; 代表火狐浏览器
+              $title="文件上传"
+        EndIf
+
+        if WinWait($title,"",4) Then ;等待弹出出现，最大等待时间是4秒
+               WinActivate($title)                  ;找到弹出窗口之后，激活当前窗口
+               ControlSetText($title,"","Edit1",$uploadfile)   ;把文件路径放入输入框，此”Edit1“是用FinderTool获              取到的
+               ControlClick($title,"","Button1")                ;点击保存或者打开或者上传按钮，此“Button1”使用FinderTool获取到的
+        Else
+        Return False
+        EndIf
+ EndFunc
+————————————————
+用例脚本里调
+//第二种办法，用autoIT3工具
+     Thread.sleep(4000);
+       Runtime.getRuntime().exec("D:\\image\\first.exe"+ " " + "chrome" + " " + "D:\\image\\QQ图片2.jpg" );
+      //三个参数分别是脚本地址（转换之后的），浏览器，你要上传的图片，文件地址
+
+
+第三种方法：Robot类
+虽然autoIT完全可以进行图片的上传，但是太麻烦了。因此，我们用jdk自带的Robot类来实现图片上传。
+Robot类主要就是模拟键盘操作，利用复制和黏贴进行文件或者图片的上传。
+代码如下：不懂的看注释
+//第三种方法，用robot类控制模拟键盘操作
+
+Thread.sleep(1000);
+String path =  "D:\\image\\QQ图片2.jpg";
+//图片或文件的路径
+
+StringSelection stringSelection = new StringSelection(path);
+//指定图片的路径，使用相对路径
+Toolkit.getDefaultToolkit().getSystemClipboard()
+        .setContents(stringSelection, null);
+//把图片路径复制粘贴到剪切板
+
+Robot robot = new Robot();
+ robot.keyPress(KeyEvent.VK_ENTER);
+    //按下Enter键
+ robot.keyRelease(KeyEvent.VK_ENTER);
+   //释放Enter键
+
+robot.keyPress(KeyEvent.VK_CONTROL);
+robot.keyPress(KeyEvent.VK_V);
+//按下Ctrl+V
+robot.keyRelease(KeyEvent.VK_CONTROL);
+robot.keyRelease(KeyEvent.VK_V);
+//释放Ctrl+V
+
+robot.keyPress(KeyEvent.VK_ENTER);
+//再次点击Enter键
+robot.keyRelease(KeyEvent.VK_ENTER);
+//再次释放Enter键
+
+Thread.sleep(5000);
+————————————————
+版权声明：本文为CSDN博主「邵漂亮」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_38941812/article/details/86597218
+
+
+
+
+

@@ -1,0 +1,87 @@
+1、关闭adb服务 
+adb kill-server
+
+2、启动adb服务
+adb start-server
+
+3、列出当前电脑连接的真机和模拟器机器列表
+adb devices
+
+4、当前app已在手机上启动，获取当前app的package和activity
+adb shell dumpsys window w |findstr \/ |findstr name=
+      mSurface=Surface(name=com.miui.calculator/com.miui.calculator.cal.CalculatorActivity)
+
+获取包名活动名：adb shell dumpsys window | findstr mCurrentFocus
+	  mCurrentFocus=Window{d32e583 u0 com.android.calculator2/com.android.calculator2.Calculator}
+	  
+5、电脑上调试webview或web页面，手机电脑都要安装google浏览器   debug的apk包
+
+   电脑google上输入chrome://inspect/#devices进入Devtools 点击inspect
+   
+6、webview和h5元素定位
+ 
+ 重点来了，亲测可用。
+
+1.设置手机的talkback功能 设置-辅助设置-talkback 开启。手机没有这个功能可以再应用商店下一个安装完成。再次进入设置开启就可以了。
+
+2.设置好以后再使用uiautomatorviewer 截屏 获取定位的元素 内嵌的webview 和 h5 都可以定位到了。
+
+ 
+
+
+
+说说副作用：
+
+1.可能调不起来键盘，那就同事 按住“关机键”，音量键 “—”，“ +” 这三个键 就会调起关闭talkback 功能，选择关闭就可以了
+
+2.开始talkback后，平时的单击应该用双击操作，滑动需要2个手指。选择还是单击。
+
+华为手机    设置--智能辅助---无障碍--talkback
+原文链接：https://blog.csdn.net/wanglong12341/article/details/80803972
+
+7、微信小程序时需要指定小程序进程
+一.查看当前小程序的进程
+手机打开小程序，电脑命令行输入adb shell dumpsys activity top| findstr ACTIVITY
+然后输入adb shell ps+刚刚得到的数字
+就可以得到当前进程名
+ capabilities.setCapability("androidProcess", "com.tencent.mm:appbrand1");
+ 
+ 注意，如果想要从webview页面再切换回nativeapp页面的话，只要再加入一行代码：appiumDriver.context(“NATIVE_APP”);
+要从nativeapp页面再回到刚刚的webview页面的话，就加入这一行代码：
+appiumDriver.context(“WEBVIEW_com.tencent.mm:tools”);
+————————————————
+
+	// 点击搜索结果中的猜歌王（采用adb命令坐标点击的方式）
+	Runtime.getRuntime().exec("adb shell input tap 400 400");//需要算出屏幕的宽和高
+	cap.setCapability(CapabilityType.BROWSER_NAME, "");
+cap.setCapability("platformName", "Android"); // 指定测试平台
+cap.setCapability("deviceName", "RSY5LZ89F67SJZYT"); // 指定测试机的ID,通过adb命令`adb devices`获取
+cap.setCapability("platformVersion", "5.1");//指定手机的安卓版本
+cap.setCapability("recreateChromeDriverSessions", true);
+cap.setCapability("autoWebview", true);
+
+//ChromeOptions使用来定制启动选项，因为在appium中切换context识别webview的时候,把com.tencent.mm:toolsmp的webview识别成com.tencent.mm的webview.
+//所以为了避免这个问题，加上androidProcess名
+
+ChromeOptions options = new ChromeOptions();
+options.setExperimentalOption("androidProcess", "com.tencent.mm:appbrand0");
+cap.setCapability(ChromeOptions.CAPABILITY, options);
+————————————————
+8、
+
+
+{
+  "platformName": "Android"，
+  "platformVersion": "8.0"，
+  "deviceName": "UEUDU16A05026011"
+}
+
+
+
+9、
+
+10、
+
+11、
+
+	  

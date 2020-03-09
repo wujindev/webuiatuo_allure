@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" guice-stage="DEVELOPMENT" verbose="3" name="Failed suite [Suite]" parallel="instances">
+  <listeners>
+    <listener class-name="listener.RetryListener"/>
+    <listener class-name="listener.TestListener"/>
+    <listener class-name="listener.TakeScreenshotListener"/>
+  </listeners>
+  <test name="Test(failed)" parallel="instances">
+    <classes>
+      <class name="testcases.OpenHome">
+        <methods>
+          <include name="openHome"/>
+        </methods>
+      </class> <!-- testcases.OpenHome -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

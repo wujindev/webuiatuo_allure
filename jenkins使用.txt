@@ -1,0 +1,42 @@
+http://mirrors.jenkins-ci.org/updates/update-center.json
+
+
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
+https://github.com/wujindev/webuiauto.git
+
+E:\update-center.json
+
+jenkins启动，关闭命令
+
+jenkins启动后，在网址栏输入http://localhost:8080/exit,点击确认后，即可关闭jenkins
+
+再次访问就要再次启动了
+
+3、重启jenkins
+
+jenkins启动后，在网址栏输入http://localhost:8080/restart,点击确认后，即可完成重启jenkins
+
+
+
+4、重新加载jenkins配置信息
+
+jenkins启动后，在网址栏输入http://localhost:8080/reload,点击确认后，即可完成重新加载jenkins配置信息
+
+
+
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/plugins/
+
+
+http://updates.jenkins-ci.org/download/plugins
+
+<listener class-name="listeners.AllureListener"></listener>
+
+
+进入命令行，运行allure -–version，出现版本号提示说明allure服务已经安装配置完毕。
+
+
+运行Allure服务生成美化后的测试报告
+
+切换到工程根目录下，打开命令行运行allure serve 命令，生成测试报告。
+Allure不仅可以和TestNG/Junit集成，还可以集成到Jenkins当中发布测试报告。预知后事如何，请听下回分解。
