@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- 将日志信息输出到控制台-->
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<!-- 设置日志输出的样式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- 设置日志输出的格式 -->
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss SSS} [%-5p] [%c] %m %n" />
+		</layout>
+		<!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- 设置日志输出的最小级别 -->
+            <param name="levelMin" value="debug"/>
+            <!-- 设置日志输出的最大级别 -->
+            <param name="levelMax" value="fatal"/>
+        </filter>
+	</appender>
+	
+	<!-- 将日志信息输出到文件 -->
+	<appender name="fileAppender" class="org.apache.log4j.FileAppender">
+		<!-- 设置日志信息输出级别 -->
+		<param name="Threshold" value="INFO" />
+		<!-- 设置日志信息输出文件全路径名 -->
+		<param name="File" value="E:/TestLog.log" />
+		<!-- 设置日志输出的样式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- 设置日志输出的格式 -->
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss SSS} [%-5p] [%c] %m %n" />
+		</layout>
+	</appender>
+    
+	<!-- 根logger的设置 -->
+	<root>
+		<level value="INFO" />
+		<!-- <appender-ref ref="fileAppender" /> -->
+		<appender-ref ref="ConsoleAppender"/>
+	</root>
+
+</log4j:configuration>
